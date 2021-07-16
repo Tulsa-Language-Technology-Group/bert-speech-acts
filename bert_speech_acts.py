@@ -119,3 +119,16 @@ history = model.fit(train_data,
                     epochs=epochs,
                     verbose=1,
                     callbacks=[cp_callback])
+
+# predict against target
+def get_prediction_target(target_path):
+    lines = []
+    with open(target_path) as f:
+        lines = f.readlines()
+        lines = [line.strip() for line in lines]
+
+    target = tf.data.Dataset.from_tensor_slices((lines, [0]*len(lines)))
+    target = (target.map(to_feature_map).batch(1))
+    return target
+
+target = get_prediction_target(target_path)
