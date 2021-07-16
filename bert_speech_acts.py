@@ -105,18 +105,17 @@ model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=2e-5),
 
 print(model.summary())
 
-# save callbacks
+# train model
 checkpoint_path = "training_1/cp.ckpt"
 checkpoint_dir = os.path.dirname(checkpoint_path)
+
 cp_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path,
                                                  save_weights_only=True,
                                                  verbose=1)
 
-# save checkpoint
 epochs = 2
 history = model.fit(train_data,
                     validation_data=valid_data,
                     epochs=epochs,
-                    verbose=1)
-
-model.save_weights('./checkpoints/checkpoint')
+                    verbose=1,
+                    callbacks=[cp_callback])
