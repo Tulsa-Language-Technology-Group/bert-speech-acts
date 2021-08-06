@@ -48,22 +48,22 @@ for d in speech_acts:
         for v in d.values():
             commissive.append(v)
 
-with open('inform.txt', 'a') as inform_samples:
+with open('inform.txt', 'a', encoding='utf-8') as inform_samples:
     inform_samples.write('Text\n')
     for s in inform:
         inform_samples.write(s + '\n')
 
-with open('question.txt', 'a') as question_samples:
+with open('question.txt', 'a', encoding='utf-8') as question_samples:
     question_samples.write('Text\n')
     for s in question:
         question_samples.write(s + '\n')
 
-with open('directive.txt', 'a') as directive_samples:
+with open('directive.txt', 'a', encoding='utf-8') as directive_samples:
     directive_samples.write('Text\n')
     for s in directive:
         directive_samples.write(s + '\n')
 
-with open('commissive.txt', 'a') as commissive_samples:
+with open('commissive.txt', 'a', encoding='utf-8') as commissive_samples:
     commissive_samples.write('Text\n')
     for s in commissive:
         commissive_samples.write(s + '\n')
@@ -80,7 +80,7 @@ question = question_df['Text'].tolist()[:per_cat_max]
 directive = directive_df['Text'].tolist()[:per_cat_max]
 commissive = commissive_df['Text'].tolist()[:per_cat_max]
 
-with open('equalized.csv', mode='w') as csv_file:
+with open('equalized.csv', mode='w', encoding='utf-8') as csv_file:
     fieldnames = ['text', 'label']
     writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
     writer.writeheader()
