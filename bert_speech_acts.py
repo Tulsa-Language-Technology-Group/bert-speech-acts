@@ -8,6 +8,7 @@ import tensorflow_hub as hub
 from official.nlp.data import classifier_data_lib
 from official.nlp.bert import tokenization
 from sklearn.model_selection import train_test_split
+import pickle
 
 sys.path.append('models')
 df = pd.read_csv('equalized.csv')
@@ -28,11 +29,12 @@ label_list = [1, 2, 3, 4]
 max_seq_length = 128
 train_batch_size = 32
 
+print("Creating tokenizer...")
 bert_layer = hub.KerasLayer("https://tfhub.dev/tensorflow/bert_en_uncased_L-12_H-768_A-12/2", trainable=True)
 vocab_file = bert_layer.resolved_object.vocab_file.asset_path.numpy()
 do_lower_case = bert_layer.resolved_object.do_lower_case.numpy()
 tokenizer = tokenization.FullTokenizer(vocab_file, do_lower_case)
-
+pickle.dump(tokenizer, open("tokenizer.pickle", "wb"))
 
 def to_feature(text, label, label_list=label_list, max_seq_length=max_seq_length, tokenizer=tokenizer):
     example = classifier_data_lib.InputExample(guid=None,
@@ -64,6 +66,7 @@ def to_feature_map(text, label):
 
 
 # complete tf pipeline with per element mappings
+print("Do per element mappings...")
 with tf.device('/cpu:0'):
     train_data = (train_data.map(to_feature_map, num_parallel_calls=tf.data.experimental.AUTOTUNE)
                   .shuffle(1000)
