@@ -1,3 +1,3 @@
-# bert-speech-acts
+# bert-illocution
 
-TensorFlow pipeline for fine-tuning BERT with speech act annotations from DailyDialog.
+Fine-tune a BERT model to identify illocutionary speech acts with TensorFlow 2 and multi-turn dialog data from DailyDialog.
